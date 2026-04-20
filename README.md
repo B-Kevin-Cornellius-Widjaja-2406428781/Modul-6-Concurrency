@@ -1,4 +1,6 @@
-## Commit 1 Reflection notes
+<details>
+
+<summary>Commit 1 Reflection notes</summary>
 
 Pada commit ini, saya membuat sebuah server TCP sederhana yang mendengarkan pada alamat `127.0.0.1:7878`. Aplikasi mendengarkan koneksi masuk dengan menggunakan `TcpListener`, dan setiap kali ada koneksi masuk, aplikasi akan memanggil fungsi `handle_connection` untuk menangani koneksi tersebut. Koneksi yang berupa `TcpStream` akan dibaca menggunakan `BufReader`. Objek `BufReader` digunakan untuk membaca data dari stream secara efisien, dan data yang dibaca akan diubah menjadi sebuah vektor string yang berisi setiap baris dari permintaan HTTP yang diterima. Akhirnya, permintaan HTTP tersebut akan dicetak per baris ke konsol. Output yang dihasilkan menunjukkan permintaan HTTP yang diterima dari klien, termasuk metode HTTP, header, dan informasi lainnya.
 
@@ -27,3 +29,18 @@ Request: [
     "Accept-Language: en-US,en;q=0.9,id;q=0.8",
 ]
 ```
+
+
+
+</details>
+
+<details>
+<summary>Commit 2 Reflection notes</summary>
+
+Pada commit ini, saya menambahkan logika untuk mengirimkan respons HTTP yang sesuai dengan permintaan yang diterima. Setelah membaca permintaan HTTP dari klien, saya memberikan sebuah formatted string sebagai response, string tersebut terdiri dari status line, header `Content-Length`, dan isi dari file `hello.html`. Status line menunjukkan bahwa permintaan berhasil dengan kode status 200 OK. Header `Content-Length` memberikan informasi tentang panjang konten yang akan dikirimkan, yang dihitung berdasarkan panjang isi file `hello.html`. Setelah membentuk response, saya menggunakan metode `write_all` untuk mengirimkan response tersebut ke klien melalui stream. `status_line` dan `Content-Length` harus dipisahkan dengan `\r\n` untuk mematuhi format HTTP, dan setelah header, saya menambahkan dua baris baru (`\r\n\r\n`) untuk menunjukkan akhir dari header dan awal dari body response. Dengan perubahan ini, server sekarang dapat merespons permintaan HTTP dengan mengirimkan konten yang sesuai kepada klien. 
+
+Karena client menerima response yang valid, maka browser akan menampilkan isi dari file `hello.html` yang berisi pesan "Hello, World!" di halaman utama. Output yang dihasilkan menunjukkan bahwa server berhasil merespons permintaan HTTP dengan mengirimkan konten yang sesuai. Dari commit ini, saya menyadari bahwa HTTP hanya merupakan protokol teks, sehingga kita dapat membentuk response HTTP dengan menggunakan string yang diformat dengan benar. Saya juga belajar tentang pentingnya menyertakan header `Content-Length` dalam response HTTP untuk memberi tahu klien tentang panjang konten yang akan diterima. Selain itu, saya memahami bagaimana menggunakan metode `write_all` untuk mengirimkan data ke klien melalui stream.
+
+![Commit 2 screen capture](assets/images/commit2.png)
+
+</details>
