@@ -44,3 +44,15 @@ Karena client menerima response yang valid, maka browser akan menampilkan isi da
 ![Commit 2 screen capture](assets/images/commit2.png)
 
 </details>
+
+<details>
+<summary>Commit 3 Reflection notes</summary>
+
+Pada commit ini, saya melakukan validasi request_line untuk memastikan bahwa server hanya merespons permintaan GET ke root path ("/"). Jika request_line tidak sesuai dengan "GET / HTTP/1.1", maka server akan merespons dengan status line "HTTP/1.1 404 NOT FOUND" dan mengirimkan isi dari file `404.html`. Dengan perubahan ini, server sekarang dapat menangani permintaan yang tidak valid dengan memberikan respons yang sesuai, yaitu halaman 404 Not Found. Output yang dihasilkan menunjukkan bahwa ketika permintaan yang tidak valid diterima, server merespons dengan status 404 dan menampilkan pesan yang sesuai di browser.
+
+Untuk melakukan split antara respons yang valid dan tidak valid, saya mengecek apakah request_line sesuai dengan "GET / HTTP/1.1". Jika sesuai, maka saya menetapkan status_line ke "HTTP/1.1 200 OK" dan filename ke "hello.html". Jika tidak sesuai, maka saya menetapkan status_line ke "HTTP/1.1 404 NOT FOUND" dan filename ke "404.html". Dengan menggunakan tuple, saya dapat menyimpan kedua nilai tersebut dalam satu variabel yang kemudian digunakan untuk membentuk respons HTTP.
+
+Saya melakukan refactoring dengan menggunakan tuple untuk menyimpan status_line dan filename. Refactoring diperlukan untuk menghindari duplikasi kode yang terjadi pada blok if/else sebelumnya. Dengan menggunakan tuple, saya dapat menyimpan status_line dan filename dalam satu variabel yang kemudian digunakan untuk membentuk respons HTTP. Hal ini membuat kode lebih bersih, lebih mudah dibaca, dan lebih mudah untuk diperluas di masa depan jika diperlukan untuk menangani lebih banyak endpoint atau jenis permintaan lainnya.
+
+![Commit 3 screen capture](assets/images/commit3.png)
+</details>
