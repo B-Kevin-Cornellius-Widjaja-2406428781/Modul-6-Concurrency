@@ -72,3 +72,16 @@ Pada commit ini, saya mengubah server menjadi multithreaded dengan menggunakan `
 `ThreadPool` adalah sebuah struktur yang mengelola sekelompok thread yang siap untuk menjalankan pekerjaan (job) yang diberikan. `Job` adalah sebuah tipe yang merepresentasikan tugas atau pekerjaan yang akan dijalankan oleh thread. `Worker` adalah sebuah struktur yang merepresentasikan setiap thread dalam pool, yang memiliki ID unik dan sebuah thread yang berjalan untuk mengeksekusi pekerjaan yang diberikan. Dengan begini, `ThreadPool` memungkinkan kita untuk mengelola dan menggunakan beberapa thread secara efisien untuk menangani pekerjaan yang masuk, seperti permintaan HTTP dalam kasus ini. Dengan menggunakan `ThreadPool`, kita dapat meningkatkan kinerja server dengan memungkinkan beberapa permintaan diproses secara bersamaan.
 
 </details>
+
+<details>
+<summary>Bonus Reflection notes (build as replacement for new)</summary>
+
+Pada bonus ini, saya menambahkan `build(size) -> Result<ThreadPool, PoolCreationError>` agar pembuatan thread pool bisa gagal secara eksplisit saat `size == 0`.
+
+Perbandingan:
+1. `new(size)` lebih ringkas, tetapi panic jika ukuran tidak valid.
+2. `build(size)` sedikit lebih verbose, tetapi error dapat ditangani caller tanpa menghentikan program.
+
+Dengan menggunakan `Result`, kita dapat memberikan informasi yang lebih jelas tentang kesalahan yang terjadi saat mencoba membuat `ThreadPool` dengan ukuran yang tidak valid. Ini memungkinkan caller untuk menangani kesalahan tersebut dengan cara yang sesuai, seperti menampilkan pesan error atau mencoba ukuran yang berbeda, tanpa harus menghentikan program secara keseluruhan. Dengan demikian, penggunaan `Result` memberikan fleksibilitas dan kontrol yang lebih baik dalam menangani situasi di mana pembuatan `ThreadPool` mungkin gagal.
+
+</details>

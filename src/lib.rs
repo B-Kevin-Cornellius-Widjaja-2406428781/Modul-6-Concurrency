@@ -9,6 +9,11 @@ pub struct ThreadPool {
 
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
+#[derive(Debug, Clone)]
+pub enum PoolCreationError {
+    InvalidSize,
+}
+
 impl ThreadPool {
     /// Create a new ThreadPool.
     ///
@@ -31,6 +36,24 @@ impl ThreadPool {
         }
 
         ThreadPool { workers, sender }
+    }
+
+    pub fn build(size: usize) -> Result<ThreadPool, PoolCreationError> {
+        if size == 0 {
+            return Err(PoolCreationError::InvalidSize);
+        }
+
+        let (sender, receiver) = mpsc::channel();
+
+        let receiver = Arc::new(Mutex::new(receiver));
+
+        let mut workers = Vec::with_capacity(size);
+
+        for id in 0..size {
+            workers.push(Worker::new(id, Arc::clone(&receiver)));
+        }
+
+        Ok(ThreadPool { workers, sender })
     }
 
     pub fn execute<F>(&self, f: F)
