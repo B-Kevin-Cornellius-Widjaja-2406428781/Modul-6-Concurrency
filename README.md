@@ -56,3 +56,10 @@ Saya melakukan refactoring dengan menggunakan tuple untuk menyimpan status_line 
 
 ![Commit 3 screen capture](assets/images/commit3.png)
 </details>
+
+<details>
+<summary>Commit 4 Reflection notes</summary>
+
+Dengan mengsimulasikan permintaan GET ke endpoint "/sleep", saya dapat menguji bagaimana server menangani permintaan yang memerlukan waktu pemrosesan yang lebih lama. Ketika permintaan GET ke "/sleep" diterima, server akan menunggu selama 10 detik sebelum merespons dengan status 200 OK dan mengirimkan isi dari file `hello.html`. Selama proses ini berjalan, permintaan ke path lain menjadi tidak responsif. Hal ini terjadi karena server saat ini hanya dapat menangani satu koneksi pada satu waktu (single-threaded), sehingga ketika permintaan ke "/sleep" sedang diproses, permintaan lain tidak dapat diproses hingga permintaan tersebut selesai. Output yang dihasilkan menunjukkan bahwa ketika permintaan GET ke "/sleep" diterima, server menunggu selama 10 detik sebelum merespons, dan selama waktu tersebut, permintaan lain menjadi tidak responsif. Hal ini menjadi masalah karena server tidak dapat menangani beberapa permintaan secara bersamaan, yang dapat menyebabkan pengalaman pengguna yang buruk jika ada permintaan yang memerlukan waktu pemrosesan yang lama.
+
+</details>
